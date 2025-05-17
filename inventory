@@ -1,0 +1,7 @@
+[laptop_vms]
+nfs
+terraform
+aap
+
+[desktop]
+ldap
