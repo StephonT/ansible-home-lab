@@ -1,6 +1,6 @@
 ---
 - name: Enroll servers into FreeIPA
-  hosts: laptop_vms
+  hosts: tis
   become: true
   gather_facts: true
   roles:

@@ -1,4 +1,18 @@
 ---
+- name: Ensure /etc/resolv.conf file is configured correctly
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - {regexp: "^search", line: "search tread-tech33.com"}
+    - {regexp: "^nameserver", line: "nameserver 192.168.1.87"}
+
+- name: Copy /etc/hosts to server
+  ansible.builtin.copy:
+    src: /etc/hosts
+    dest: /etc/hosts
+
 - name: Ensure hostname is set correctly
   ansible.builtin.hostname:
     name: "{{ ansible_hostname }}.{{ ipa_domain }}"
