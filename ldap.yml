@@ -1,0 +1,8 @@
+---
+- name: Enroll servers into FreeIPA
+  hosts: laptop_vms
+  become: true
+  gather_facts: true
+  roles:
+    - ldap-client
+

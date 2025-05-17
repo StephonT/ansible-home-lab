@@ -1,0 +1,26 @@
+---
+- name: Ensure hostname is set correctly
+  ansible.builtin.hostname:
+    name: "{{ ansible_hostname }}.{{ ipa_domain }}"
+
+- name: Install IPA client packages
+  ansible.builtin.dnf:
+    name: ipa-client
+    state: present
+
+- name: Run IPA client install
+  ansible.builtin.command: >
+    ipa-client-install --unattended
+    --domain={{ ipa_domain }}
+    --realm={{ ipa_realm }}
+    --server={{ ipa_server }}
+    --mkhomedir
+    --principal={{ ipa_admin_user }}
+    --password={{ ipa_admin_password }}
+  register: ipa_client_result
+  changed_when: "'Enrolled in IPA realm' in ipa_client_result.stdout"
+
+- name: Show enrollment result
+  ansible.builtin.debug:
+    var: ipa_client_result.stdout
+
